@@ -4,7 +4,6 @@ import { addEvent } from "../redux/eventSlice";
 import { db } from "../firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
-// Helper function to compress an image file using a canvas
 const compressImage = (file, quality = 0.7, maxWidth = 800, maxHeight = 800) =>
   new Promise((resolve, reject) => {
     const img = new Image();
@@ -12,19 +11,16 @@ const compressImage = (file, quality = 0.7, maxWidth = 800, maxHeight = 800) =>
     img.src = url;
     img.onload = () => {
       let { width, height } = img;
-      // Calculate new dimensions while preserving aspect ratio
       if (width > maxWidth || height > maxHeight) {
         const ratio = Math.min(maxWidth / width, maxHeight / height);
         width = width * ratio;
         height = height * ratio;
       }
-      // Create a canvas and draw the scaled image
       const canvas = document.createElement("canvas");
       canvas.width = width;
       canvas.height = height;
       const ctx = canvas.getContext("2d");
       ctx.drawImage(img, 0, 0, width, height);
-      // Convert the canvas to a base64 JPEG image with the given quality
       const dataUrl = canvas.toDataURL("image/jpeg", quality);
       resolve(dataUrl);
       URL.revokeObjectURL(url);
@@ -59,7 +55,6 @@ function EventForm({ onClose }) {
     let imageUrl = "";
     if (formData.image) {
       try {
-        // Compress the image before converting to base64
         imageUrl = await compressImage(formData.image);
       } catch (error) {
         console.error("Error compressing image:", error);
@@ -77,14 +72,10 @@ function EventForm({ onClose }) {
     };
 
     try {
-      // Save event in Firestore and get the document ID
       const docRef = await addDoc(collection(db, "events"), eventData);
       eventData.id = docRef.id;
       console.log("Document written with ID: ", docRef.id);
 
-      // Firestore onSnapshot will update Redux state automatically.
-
-      // Close the modal/form by calling onClose
       onClose && onClose();
     } catch (error) {
       console.error("Error adding document:", error);

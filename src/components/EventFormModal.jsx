@@ -18,7 +18,7 @@ function EventFormModal() {
       </div>
 
       {isOpen && (
-        <div className=" fixed inset-0 z-50 flex justify-center items-center bg-transparent opacity-95 max-h-screen h-220 pt-20 pb-20 backdrop-blur-3xl">
+        <div className=" fixed inset-0 z-50 flex justify-center items-center bg-transparent opacity-100 max-h-screen h-220 pt-20 pb-20 backdrop-blur-3xl">
           <div className="bg-stone-800 p-6 rounded-xl shadow-lg  max-w-full w-lg h-180 overflow-y-auto">
             <EventForm onClose={closeForm} />
           </div>
