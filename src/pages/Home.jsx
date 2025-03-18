@@ -14,7 +14,7 @@ function Home() {
   const rightRef = useRef();
   const whyRef = useRef();
   const cardRef = useRef();
-  const btmRef = useRef();
+  const btmRef = useRef();   
 
   useGSAP(() => {
     gsap.from(leftRef.current.children, {
